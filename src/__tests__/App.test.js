@@ -2,7 +2,7 @@ import React from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
 import user from '@testing-library/user-event'
 import '@testing-library/jest-dom'
-import App from '../App'
+import App from '../components/App'
 
 describe('Test App', () => {
   test('header rendered', () => {

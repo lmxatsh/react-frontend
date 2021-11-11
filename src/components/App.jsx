@@ -19,7 +19,9 @@ function App() {
   }
   return (
     <div>
-      <h1 data-testid="test-username-header">Vite-React Demo App</h1>
+      <h1 data-testid="test-username-header" className="text-green-400">
+        Vite-React Demo App
+      </h1>
       <input
         id="username-input"
         data-testid="test-username-input"
@@ -35,10 +37,10 @@ function App() {
         <BrowserRouter>
           <nav>
             <ul>
-              <li>
+              <li className="text-red-200 hover:text-blue-500">
                 <Link to="/user/login">Login</Link>
               </li>
-              <li>
+              <li className="text-red-200 hover:text-blue-500">
                 <Link to="/user/register">Register</Link>
               </li>
             </ul>
