@@ -18,6 +18,7 @@ function Register() {
     axios
       .post('/api/users/new', formData)
       .then((res) => {
+        console.log(res)
         setSubmitting(false)
       })
       .catch((err) => {
