@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router'
 
-function Login() {
+function SignUp() {
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [submitting, setSubmitting] = useState(false)
-  const [login, setLogin] = useState(false)
-  const navigate = useNavigate()
   function handleChange(event) {
     setFormData({
       ...formData,
@@ -17,13 +14,23 @@ function Login() {
 
   function handleSubmit(event) {
     event.preventDefault()
-    navigate('/user/profile/1')
+    setSubmitting(true)
+    axios
+      .post('/api/auth/signin', formData)
+      .then((res) => {
+        console.log(res)
+        setSubmitting(false)
+      })
+      .catch((err) => {
+        setSubmitting(false)
+        console.log(`Error: ${err}`)
+      })
   }
 
   return (
     <div>
       <form className="" onSubmit={handleSubmit}>
-        <p className="mt-10">User Login</p>
+        <p className="mt-10">User Register</p>
         <fieldset>
           <label htmlFor="login-email">email</label>
           <input
@@ -32,7 +39,7 @@ function Login() {
             id="login-email"
             name="email"
             disabled={submitting}
-            //required
+            required
             onChange={handleChange}
           />
           <label htmlFor="login-password">password</label>
@@ -42,7 +49,7 @@ function Login() {
             name="password"
             id="login-password"
             disabled={submitting}
-            //required
+            required
             onChange={handleChange}
           />
         </fieldset>
@@ -58,4 +65,4 @@ function Login() {
   )
 }
 
-export default Login
+export default SignUp

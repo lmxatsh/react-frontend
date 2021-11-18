@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+//import axios from 'axios'
+import { useNavigate } from 'react-router'
 
-function Register() {
+function Signin() {
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [submitting, setSubmitting] = useState(false)
+  //const [login, setLogin] = useState(false)
+  const navigate = useNavigate()
   function handleChange(event) {
     setFormData({
       ...formData,
@@ -15,22 +18,13 @@ function Register() {
   function handleSubmit(event) {
     event.preventDefault()
     setSubmitting(true)
-    axios
-      .post('/api/users/new', formData)
-      .then((res) => {
-        console.log(res)
-        setSubmitting(false)
-      })
-      .catch((err) => {
-        setSubmitting(false)
-        console.log(`Error: ${err}`)
-      })
+    navigate('/user/profile/1')
   }
 
   return (
     <div>
       <form className="" onSubmit={handleSubmit}>
-        <p className="mt-10">User Register</p>
+        <p className="mt-10">User Login</p>
         <fieldset>
           <label htmlFor="login-email">email</label>
           <input
@@ -65,4 +59,4 @@ function Register() {
   )
 }
 
-export default Register
+export default Signin
