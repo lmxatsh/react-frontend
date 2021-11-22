@@ -28,7 +28,7 @@ function SignUp() {
   }
 
   return (
-    <div>
+    <>
       <form className="" onSubmit={handleSubmit}>
         <p className="mt-10">User Register</p>
         <fieldset>
@@ -61,7 +61,7 @@ function SignUp() {
           Submit
         </button>
       </form>
-    </div>
+    </>
   )
 }
 

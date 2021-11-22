@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Link, Route, Routes } from 'react-router-dom'
 import Auth from './Auth'
 
 function App() {
-
+  const [authStatus, setAuthStatus] = useState(null)
+  
   return (
     <>
       <h1 data-testid="test-username-header" className="text-blue-400">
