@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from 'axios'
+import { Navigate } from 'react-router'
+import { AuthContext } from '../context/AuthContext'
 
 function SignUp() {
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [submitting, setSubmitting] = useState(false)
+  const { authStatus } = useContext(AuthContext)
   function handleChange(event) {
     setFormData({
       ...formData,
@@ -16,7 +19,7 @@ function SignUp() {
     event.preventDefault()
     setSubmitting(true)
     axios
-      .post('/api/auth/signin', formData)
+      .post('/api/auth/signup', formData)
       .then((res) => {
         console.log(res)
         setSubmitting(false)
@@ -27,7 +30,9 @@ function SignUp() {
       })
   }
 
-  return (
+  return authStatus ? (
+    <Navigate to="/profile" />
+  ) : (
     <>
       <form className="" onSubmit={handleSubmit}>
         <p className="mt-10">User Register</p>

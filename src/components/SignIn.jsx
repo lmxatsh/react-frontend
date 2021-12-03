@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
-//import axios from 'axios'
-import { useNavigate } from 'react-router'
+import React, { useState, useContext } from 'react'
+import axios from 'axios'
+import { Navigate, useNavigate } from 'react-router'
+import { AuthContext } from '../context/AuthContext'
 
-function Signin() {
+function SignIn() {
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [submitting, setSubmitting] = useState(false)
-  //const [login, setLogin] = useState(false)
+  const { authStatus, setAuthStatus } = useContext(AuthContext)
   const navigate = useNavigate()
   function handleChange(event) {
     setFormData({
@@ -18,10 +19,23 @@ function Signin() {
   function handleSubmit(event) {
     event.preventDefault()
     setSubmitting(true)
-    navigate('/user/profile/1')
+    axios
+      .post('/api/auth/signin', formData)
+      .then((res) => {
+        console.log(res)
+        setSubmitting(false)
+        setAuthStatus(res)
+        navigate('/profile')
+      })
+      .catch((err) => {
+        setSubmitting(false)
+        console.log(`Error: ${err}`)
+      })
   }
 
-  return (
+  return authStatus ? (
+    <Navigate to="/profile" />
+  ) : (
     <>
       <form className="" onSubmit={handleSubmit}>
         <p className="mt-10">User Login</p>
@@ -59,4 +73,4 @@ function Signin() {
   )
 }
 
-export default Signin
+export default SignIn

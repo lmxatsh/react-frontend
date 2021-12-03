@@ -28,6 +28,7 @@ module.exports = {
     'testing-library/no-await-sync-query': 'error',
     'testing-library/no-debugging-utils': 'warn',
     'testing-library/no-dom-import': 'off',
+    "react/prop-types": "off",
   },
   overrides: [
     {

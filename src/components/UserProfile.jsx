@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from '../context/AuthContext'
 
 function UserProfile() {
-  return (
-    <div>
-      <h1>User Profile</h1>
-      <p>Login Success</p>
-    </div>
+  const { authStatus } = useContext(AuthContext)
+  return authStatus ? (
+    <>
+      <p>Signin Success</p>
+      <p>User Email: {authStatus.email}</p>
+    </>
+  ) : (
+    <>
+      <p>Please Signin</p>
+    </>
   )
 }
 

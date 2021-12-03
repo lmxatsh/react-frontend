@@ -1,29 +1,57 @@
-import React, {useState} from 'react'
-import { Link, Route, Routes } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Route, Routes } from 'react-router-dom'
 import Auth from './Auth'
+import { AuthContext } from '../context/AuthContext'
+import UserProfile from './UserProfile'
+import ProtectedRoute from './ProtectedRoute'
+import axios from 'axios'
+import NavBar from './NavBar'
 
 function App() {
   const [authStatus, setAuthStatus] = useState(null)
-  
+  useEffect(() => {
+    async function findUser() {
+      await axios
+        .get('/api/auth/user')
+        .then((res) => {
+          setAuthStatus(res.data)
+          console.log(res.data)
+        })
+        .catch((err) => {
+          console.log(`Error: ${err}`)
+        })
+    }
+    findUser()
+  }, [])
+
   return (
     <>
       <h1 data-testid="test-username-header" className="text-blue-400">
         Vite-React Demo App
       </h1>
-      <nav className="fex-row">
-        <ul>
-          <li className="text-red-200 hover:text-blue">
-            <Link to="/auth/signin">SignIn</Link>
-          </li>
-          <li className="text-red-100 hover:text-blue">
-            <Link to="/auth/signup">SignUp</Link>
-          </li>
-        </ul>
-      </nav>
-      <Routes>
-        <Route path="/" element={<>Hello</>} />
-        <Route path="/auth/*" element={<Auth />} />
-      </Routes>
+
+      <AuthContext.Provider value={{ authStatus, setAuthStatus }}>
+        <NavBar />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <p>Hello Vite</p>
+              </>
+            }
+          />
+          <Route path="/auth/*" element={<Auth />} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <UserProfile />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </AuthContext.Provider>
     </>
   )
 }
